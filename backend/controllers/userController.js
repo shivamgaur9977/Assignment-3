@@ -25,11 +25,9 @@ export const getUser = (req, res) => {
 };
 
 export const searchUser = (req, res) => {
-    const { filter, query } = req.query;
-    if (!filter || !query)
-        return res.status(400).json({ message: "Missing search parameters" });
+    const { country, state, city, field, query } = req.query;
 
-    searchUsers(filter, query, (err, results) => {
+    searchUsers({ country, state, city, field, query }, (err, results) => {
         if (err) {
             console.error("❌ Error retrieving search results:", err);
             return res.status(500).json({ message: "Database Error" });
