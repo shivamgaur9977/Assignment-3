@@ -51,7 +51,7 @@ export default function Home() {
         e.preventDefault();
         try {
             setLoading(true);
-            let res = await axios.get(`http://localhost:8080/search/?`, {
+            let res = await axios.get(`https://assignment-3-rqol.onrender.com/search/?`, {
                 params: {
                     filter: searchQuery.field,
                     query: searchQuery.query,
