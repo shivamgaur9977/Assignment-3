@@ -12,12 +12,22 @@ export default function FilteredUsers({ user }) {
                 <span className="user-role">{user.contactNo}</span>
                 <div className="user-stats">
                     <div className="stat">
-                        <div className="stat-value">{user.incomeSource}</div>
-                        <div className="stat-label">Income Source</div>
+                        <div className="stat-value">{user.country}</div>
+                        <div className="stat-label">Country</div>
                     </div>
                     <div className="stat">
                         <div className="stat-value">{user.age}</div>
                         <div className="stat-label">age</div>
+                    </div>
+                </div>
+                <div className="user-stats">
+                    <div className="stat">
+                        <div className="stat-value">{user.state}</div>
+                        <div className="stat-label">State</div>
+                    </div>
+                    <div className="stat">
+                        <div className="stat-value">{user.city}</div>
+                        <div className="stat-label">City</div>
                     </div>
                 </div>
             </div>
