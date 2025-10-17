@@ -53,11 +53,11 @@ export default function Home() {
             setLoading(true);
             let res = await axios.get(`https://assignment-3-rqol.onrender.com/search/?`, {
                 params: {
+                    country: country,
+                    state: state,
+                    city: city,
                     filter: searchQuery.field,
                     query: searchQuery.query,
-                    city: city,
-                    country: country,
-                    state: state
                 }
             });
             console.log(res);
