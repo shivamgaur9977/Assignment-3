@@ -25,9 +25,9 @@ export const getUser = (req, res) => {
 };
 
 export const searchUser = (req, res) => {
-    const { country, state, city, field, query } = req.query;
+    const { country, state, city, field, query, ageRange, distanceRange } = req.query;
 
-    searchUsers({ country, state, city, field, query }, (err, results) => {
+    searchUsers({ country, state, city, field, query, ageRange, distanceRange }, (err, results) => {
         if (err) {
             console.error("❌ Error retrieving search results:", err);
             return res.status(500).json({ message: "Database Error" });
