@@ -16,6 +16,10 @@ export default function Home() {
     const [country, setCountry] = useState("");
     const [state, setState] = useState("");
     const [city, setCity] = useState("");
+    const [ageRange, setAgeRange] = useState("");
+    const [distanceRange, setDistanceRange] = useState("");
+    let ageRangeOptions = ["18-25", "26-35", "36-45", "46-60", "60+"];
+
 
     useEffect(() => {
         getAllUsers(setAllUsers, setLoading);
@@ -58,6 +62,8 @@ export default function Home() {
                     city: city,
                     filter: searchQuery.field,
                     query: searchQuery.query,
+                    ageRange: ageRange,
+                    distanceRange: distanceRange,
                 }
             });
             console.log(res);
@@ -75,7 +81,7 @@ export default function Home() {
                 <h1>User Directory</h1>
                 <p>Find and connect with team members</p>
             </header>
-            <LocationSelector country={country} setCountry={setCountry} state={state} setState={setState} city={city} setCity={setCity}/>
+            <LocationSelector country={country} setCountry={setCountry} state={state} setState={setState} city={city} setCity={setCity} ageRange={ageRange} setAgeRange={setAgeRange} ageRangeOptions={ageRangeOptions} distanceRange={distanceRange} setDistanceRange={setDistanceRange} />
             <div className="search-section">
                 <form className="d-flex search-form" onSubmit={handleSubmit} role="search">
                     <select className="form-select select-dropdown" name="field" onChange={handleChanges} value={searchQuery.field} aria-label="Default select example">
@@ -99,7 +105,7 @@ export default function Home() {
                         <FilteredUsers user={user} key={idx} />
                     )
                 })}
-                {allUsers && allUsers.length ==0 && <div style={{color: "red"}}>No Record Found</div>}
+                {allUsers && allUsers.length == 0 && <div style={{ color: "red" }}>No Record Found</div>}
             </div>
             {loading && <Loader />}
         </div>

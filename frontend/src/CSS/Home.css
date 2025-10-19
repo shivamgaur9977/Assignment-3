@@ -76,7 +76,7 @@ header p {
 }
 
 .select-dropdown {
-    width: 30%;
+    width: auto;
     border-radius: 25px;
     margin-right: 5px;
 }

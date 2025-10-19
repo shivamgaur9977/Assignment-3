@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import '../CSS/Location.css';
 import axios from "axios";
 
-const LocationSelector = ({country, setCountry, state, setState, city, setCity}) => {
+const LocationSelector = ({ country, setCountry, state, setState, city, setCity, ageRange, setAgeRange, ageRangeOptions, distanceRange, setDistanceRange }) => {
     const data = {
         India: {
             Maharashtra: ["Mumbai", "Pune", "Nagpur"],
@@ -24,7 +24,7 @@ const LocationSelector = ({country, setCountry, state, setState, city, setCity})
     const states = country ? Object.keys(data[country]) : [];
     const cities = country && state ? data[country][state] : [];
 
-    let handleSelectorChanges = async(e) => {
+    let handleSelectorChanges = async (e) => {
         setCountry(e.target.value);
         setState("");
         setCity("");
@@ -96,6 +96,42 @@ const LocationSelector = ({country, setCountry, state, setState, city, setCity})
                                     {ct}
                                 </option>
                             ))}
+                        </select>
+                    </div>
+
+                    <div className="filter-row">
+                        <label htmlFor="age" className="form-label fw-semibold">
+                            Age
+                        </label>
+                        <select
+                            id="age"
+                            className="form-select select-dropdown"
+                            value={ageRange}
+                            onChange={(e) => setAgeRange(e.target.value)}
+                        >
+                            <option value="">All Ages</option>
+                            {ageRangeOptions.map((option, idx) => {
+                                return (
+                                    <option value={option} key={idx}>{option}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                    <div className="form-label fw-semibold">
+                        <label htmlFor="distance" className="form-label fw-semibold">
+                            Distance
+                        </label>
+                        <select
+                            id="distance"
+                            className="form-select select-dropdown"
+                            value={distanceRange}
+                            onChange={(e) => setDistanceRange(e.target.value)}
+                        >
+                            <option value="">Any Distance</option>
+                            <option value="0-10">0–10 km</option>
+                            <option value="10-25">10–25 km</option>
+                            <option value="25-50">25–50 km</option>
+                            <option value="50-100">50–100 km</option>
                         </select>
                     </div>
                 </div>
