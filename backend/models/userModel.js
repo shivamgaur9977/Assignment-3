@@ -29,22 +29,9 @@ export const searchUsers = (filters, callback) => {
     }
 
     // 👶 Age range filter
-    if (filters.ageRange) {
-        const range = filters.ageRange.trim();
-        if (range.includes('+')) {
-            // e.g. "60+"
-            const minAge = parseInt(range.replace('+', ''));
-            if (!isNaN(minAge)) {
-                sql += " AND age >= ?";
-                params.push(minAge);
-            }
-        } else if (range.includes('-')) {
-            const [minAge, maxAge] = range.split('-').map(v => parseInt(v));
-            if (!isNaN(minAge) && !isNaN(maxAge)) {
-                sql += " AND age BETWEEN ? AND ?";
-                params.push(minAge, maxAge);
-            }
-        }
+    if (filters.age && !isNaN(filters.age)) {
+        sql += " AND age = ?";
+        params.push(Number(filters.age));
     }
 
     // 📏 Distance range filter
@@ -60,9 +47,16 @@ export const searchUsers = (filters, callback) => {
     const allowedFields = ["name", "email", "age", "contactNo", "gender", "occupation", "status"];
     if (filters.query) {
         if (filters.field && allowedFields.includes(filters.field)) {
-            sql += ` AND ${filters.field} LIKE ?`;
-            params.push(`%${filters.query}%`);
+            // special handling for age (numeric field)
+            if (filters.field === "age" && !isNaN(filters.query)) {
+                sql += " AND age = ?";
+                params.push(Number(filters.query));
+            } else {
+                sql += ` AND ${filters.field} LIKE ?`;
+                params.push(`%${filters.query}%`);
+            }
         } else {
+            // search in all allowed fields
             sql += " AND (" + allowedFields.map(f => `${f} LIKE ?`).join(" OR ") + ")";
             allowedFields.forEach(() => params.push(`%${filters.query}%`));
         }
