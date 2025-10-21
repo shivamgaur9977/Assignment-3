@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import '../CSS/Location.css';
 import axios from "axios";
 
-const LocationSelector = ({ country, setCountry, state, setState, city, setCity, ageRange, setAgeRange, ageRangeOptions, distanceRange, setDistanceRange }) => {
+const LocationSelector = ({ country, setCountry, state, setState, city, setCity, age, setAge, ageRangeOptions, distanceRange, setDistanceRange }) => {
     const data = {
         India: {
             Maharashtra: ["Mumbai", "Pune", "Nagpur"],
@@ -98,24 +98,22 @@ const LocationSelector = ({ country, setCountry, state, setState, city, setCity,
                             ))}
                         </select>
                     </div>
-
-                    <div className="filter-row">
-                        <label htmlFor="age" className="form-label fw-semibold">
-                            Age
+                    <div className="filter-row mt-3">
+                        <label htmlFor="age" className="form-label fw-semibold d-block">
+                            Age: <strong>{age}</strong>
                         </label>
-                        <select
+
+                        <input
+                            type="range"
                             id="age"
-                            className="form-select select-dropdown"
-                            value={ageRange}
-                            onChange={(e) => setAgeRange(e.target.value)}
-                        >
-                            <option value="">All Ages</option>
-                            {ageRangeOptions.map((option, idx) => {
-                                return (
-                                    <option value={option} key={idx}>{option}</option>
-                                )
-                            })}
-                        </select>
+                            name="age"
+                            min="18"
+                            max="80"
+                            step="1"
+                            value={age}
+                            onChange={(e) => setAge(e.target.value)}
+                            className="form-range age-slider"
+                        />
                     </div>
                     <div className="form-label fw-semibold">
                         <label htmlFor="distance" className="form-label fw-semibold">

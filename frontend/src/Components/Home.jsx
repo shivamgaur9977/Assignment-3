@@ -10,13 +10,13 @@ import LocationSelector from "./LocationSelector";
 
 export default function Home() {
     let [filteredUser, setFilteredUser] = useState([]);
+    const [age, setAge] = useState(18);
     let [allUsers, setAllUsers] = useState();
     let [searchQuery, setSearchQuery] = useState({ field: "name", query: "" });
     let [loading, setLoading] = useState(false);
     const [country, setCountry] = useState("");
     const [state, setState] = useState("");
     const [city, setCity] = useState("");
-    const [ageRange, setAgeRange] = useState("");
     const [distanceRange, setDistanceRange] = useState("");
     let ageRangeOptions = ["18-25", "26-35", "36-45", "46-60", "60+"];
 
@@ -24,6 +24,14 @@ export default function Home() {
     useEffect(() => {
         getAllUsers(setAllUsers, setLoading);
     }, []);
+
+    useEffect(() => {
+        const slider = document.querySelector(".age-slider");
+        if (slider) {
+            slider.style.setProperty("--val", age);
+        }
+    }, [age]);
+
 
     useEffect(() => {
         if (allUsers) {
@@ -55,14 +63,15 @@ export default function Home() {
         e.preventDefault();
         try {
             setLoading(true);
-            let res = await axios.get(`https://assignment-3-rqol.onrender.com/search/?`, {
+            // https://assignment-3-rqol.onrender.com/search/?
+            let res = await axios.get(`http://localhost:8080/search`, {
                 params: {
                     country: country,
                     state: state,
                     city: city,
                     filter: searchQuery.field,
                     query: searchQuery.query,
-                    ageRange: ageRange,
+                    age: age,
                     distanceRange: distanceRange,
                 }
             });
@@ -81,7 +90,7 @@ export default function Home() {
                 <h1>User Directory</h1>
                 <p>Find and connect with team members</p>
             </header>
-            <LocationSelector country={country} setCountry={setCountry} state={state} setState={setState} city={city} setCity={setCity} ageRange={ageRange} setAgeRange={setAgeRange} ageRangeOptions={ageRangeOptions} distanceRange={distanceRange} setDistanceRange={setDistanceRange} />
+            <LocationSelector country={country} setCountry={setCountry} state={state} setState={setState} city={city} setCity={setCity} age={age} setAge={setAge} ageRangeOptions={ageRangeOptions} distanceRange={distanceRange} setDistanceRange={setDistanceRange} />
             <div className="search-section">
                 <form className="d-flex search-form" onSubmit={handleSubmit} role="search">
                     <select className="form-select select-dropdown" name="field" onChange={handleChanges} value={searchQuery.field} aria-label="Default select example">
